@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Điền Thông Tin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+        #code {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Form Điền Thông Tin</h2>
+
+<form id="infoForm">
+    <label for="name">Tên:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <button type="submit">Submit</button>
+</form>
+
+<p id="code"></p>
+
+<script>
+    // Xử lý sự kiện khi người dùng nhấn Submit
+    document.getElementById('infoForm').addEventListener('submit', function(e) {
+        e.preventDefault();  // Ngăn không reload trang khi submit
+
+        // Lấy thông tin từ form
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+
+        // Sinh mã code dựa trên tên và email
+        const uniqueCode = generateCode(name, email);
+
+        // Hiển thị mã code ra màn hình
+        document.getElementById('code').innerText = 'Mã code của bạn: ' + uniqueCode;
+    });
+
+    // Hàm sinh mã code (dựa trên tên và email)
+    function generateCode(name, email) {
+        const currentDate = new Date().getTime();  // Lấy thời gian hiện tại để đảm bảo tính duy nhất
+        const baseCode = name.charAt(0).toUpperCase() + email.charAt(0).toUpperCase();  // Lấy ký tự đầu của tên và email
+        const randomNum = Math.floor(1000 + Math.random() * 9000);  // Tạo số ngẫu nhiên 4 chữ số
+
+        return baseCode + currentDate + randomNum;  // Ghép lại thành mã code duy nhất
+    }
+</script>
+
+</body>
+</html>
